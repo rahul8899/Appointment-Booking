@@ -46,7 +46,7 @@ export class medicalTestsController {
             // chek is test is allredy exist or not.
             const existingTest = await MedicalTests.findOne({ where: { testName } });
             if (existingTest) {
-                return res.status(409).json({
+                return res.status(201).json({
                     message: "Test is allredy Created."
                 })
             }
@@ -71,7 +71,7 @@ export class medicalTestsController {
             const user = await MedicalTests.findByPk(testId);
             if (testId) {
                 await user.update(body);
-                res.json({
+                return res.status(200).json({
                     success: true,
                     data: user
                 })
@@ -88,7 +88,7 @@ export class medicalTestsController {
         const { testId } = req.params;
         try {
             const user = await MedicalTests.findByPk(testId)
-            if (testId) {
+            if (user) {
                 await user.destroy();
                 return res.status(200).json({
                     success: true,

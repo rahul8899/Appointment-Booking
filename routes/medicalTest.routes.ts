@@ -12,7 +12,7 @@ export class medialTestRoutes {
         // Route to get a specific test by ID
         this.router.get('/getbyid/:testId', this.mc.getTestByID);
 
-        // Route to update test details
+        // Route to create test 
         this.router.post('/create', this.mc.createTest)
 
         // Route to update test details
