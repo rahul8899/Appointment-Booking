@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import db from "./index";
 
-export const MedicalTests = db.sequelize.define('medicaltests',{
+export const MedicalTests = db.sequelize.define('medicaltests', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -19,4 +19,8 @@ export const MedicalTests = db.sequelize.define('medicaltests',{
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
   },
+  testSample: {
+    type: DataTypes.STRING,
+    allowNull: false
+  }
 });
