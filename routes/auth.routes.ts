@@ -1,7 +1,5 @@
-import express from "express";
 import { Router } from "express";
 import { authController } from "../controller/auth.controller";
-import { authenticateToken } from "../middeleware/auth.middleware";
 
 export class authRoutes {
     router = Router();

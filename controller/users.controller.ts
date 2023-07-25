@@ -36,7 +36,7 @@ export class userController {
             const user = await Users.findByPk(userId)
             if (user) {
                 // Remove sensitive data (password) before sending the response
-                const { id, firstName, lastName, email } = user;
+                // const { id, firstName, lastName, email } = user;
                 return res.status(200).json({
                     success: true,
                     data: user
