@@ -24,4 +24,17 @@ export const Users = db.sequelize.define('users',{
     type: DataTypes.STRING,
     allowNull: false,
   },
+}, {
+    tablename: 'users',
+    timestamp: false,
+    indexes: [
+        {
+            name: "PRIMARY",
+            unique: true,
+            using: "BTREE",
+            fields: [
+                { name: 'id' }
+            ]
+        }
+    ]
 });
