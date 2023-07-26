@@ -26,7 +26,10 @@ export class authController {
                 email,
                 password: hashedPassword,
             });
-            return res.status(201).json({ newUser });
+            return res.status(201).json({
+                message: "User registed successfully",
+                newUser
+            });
         } catch (error) {
             console.log("Error in registering user");
             return res.status(500).json({
