@@ -5,10 +5,7 @@ import bcrypt from "bcrypt";
 import * as dotenv from "dotenv";
 dotenv.config()
 
-const generateToken = (user: any) => {
-    const tokenSecret: any = process.env.JWT_SECREAT_KEY
-    return jwt.sign({ id: Users.id }, tokenSecret, { expiresIn: '1h' });
-}
+export const JWT_SECRET = "rahulkaklotar";
 export class authController {
     registerUser = async (req: Request, res: Response) => {
         const { firstName, lastName, email, password } = req.body;
@@ -19,7 +16,7 @@ export class authController {
                 return res.status(409).json({
                     message: "Email is allredy registed."
                 })
-            }
+            };
 
             // hashing the password
             const hashedPassword = await bcrypt.hash(password, 10);
@@ -28,16 +25,13 @@ export class authController {
                 lastName,
                 email,
                 password: hashedPassword,
-            })
-
-            //genearate JWT token and send it into reponse
-            const token = generateToken(newUser);
-            return res.status(201).json({ token });
+            });
+            return res.status(201).json({ newUser });
         } catch (error) {
             console.log("Error in registering user");
             return res.status(500).json({
                 message: "Enternal server Error"
-            })
+            });
         }
     }
 
@@ -45,22 +39,24 @@ export class authController {
         const { email, password } = req.body;
         try {
             // Find the user by email
-            const user = await Users.findOne({ where: { email } })
+            let user = await Users.findOne({ where: { email } })
             if (!user) {
-                return res.status(401).json({ message: 'Invalid credentials' });
+                return res.status(401).json({ message: 'User not found' });
             }
 
             // Compare the provided password with the hashed password in the database
-            const passwordValid = await bcrypt.compare(password, user.password)
-            if (!passwordValid) {
+            const isPasswordValid = await bcrypt.compare(password, user.password)
+            if (!isPasswordValid) {
                 return res.status(401).json({ message: "Invalid credentials" })
             }
 
             // Generate a JWT token and send it in the response
-            const token = generateToken(user);
+            const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: "1h" });
+
             return res.status(200).json({
-                message: "login succesfully",
-                token
+                message: "Login successful",
+                user: { id: user.id, firstName: user.firstName, lastName: user.lastName, email: user.email },
+                token,
             });
         } catch (error) {
             console.error('Error logging in user:', error);

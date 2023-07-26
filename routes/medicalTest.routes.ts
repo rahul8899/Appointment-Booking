@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { medicalTestsController } from "../controller/medicaltests.controller";
-import { authenticateToken } from "../middeleware/auth.middleware";
 import { bodyValidator } from "../middeleware/validate.schema.middeleware";
 import { medicalTestSchema } from "../schema.validation/medicaltest.schema";
 
