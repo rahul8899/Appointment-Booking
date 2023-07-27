@@ -94,7 +94,7 @@ export class appointmentController {
                     message: "Appointment is deleted"
                 })
             } else {
-                return res.status(404).json({ message: "Appointment is not deleted" })
+                return res.status(404).json({ message: "Appointment is not founded." })
             }
         } catch (error) {
             console.error("Error in deleting appoinment", error);
