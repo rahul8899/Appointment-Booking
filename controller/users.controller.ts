@@ -52,34 +52,26 @@ export class userController {
 
     updateUser = async (req: Request, res: Response) => {
         const { userId } = req.params;
-        const { body } = req;
+        // const { body } = req;
+        const { firstName } = req.params;
+        const { lastName } = req.params;
+        const { email } = req.params;
 
         try {
             // Find the user by id in the database
             const user = await Users.findByPk(userId);
             if (user) {
-                await user.update(body);
+                await user.update({ firstName, lastName, email });
                 res.json({
                     success: true,
+                    // for geting data without password field
+                    // data: { firstName: user.firstName, lastName: user.lastName, email: user.email }
                     data: user
                 })
             } else {
                 return res.status(404).json({ message: 'User not found' });
             }
 
-            // second method for update 
-            // const user = await User.findByPk(userId);
-            // if (!user) {
-            //     return res.status(404).json({ message: 'User not found' });
-            // }
-            // // Update the user's details
-            // user.firstName = firstName;
-            // user.lastName = lastName;
-            // user.email = email;
-            // await user.save();
-            // // Remove sensitive data (password) before sending the response
-            // const { id, firstName: updatedFirstName, lastName: updatedLastName, email: updatedEmail } = user;
-            // return res.status(200).json({ id, firstName: updatedFirstName, lastName: updatedLastName, email: updatedEmail });
         } catch (error) {
             console.error('Error updating user:', error);
             return res.status(500).json({ message: 'Internal server error' });
